@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gutherson Soundboard Login</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input[type="password"] {
+            margin-bottom: 10px;
+            padding: 5px;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            padding: 5px 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <form id="loginForm">
+        <input type="password" id="password" placeholder="Enter password" required>
+        <input type="submit" value="Log in">
+    </form>
+    <script>
+        const correctPassword = "guthy123"; // Change this to the desired password
+
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const password = document.getElementById("password").value;
+
+            if (password === correctPassword) {
+                window.location.href = "soundboard.html"; // Redirect to soundboard.html after successful login
+            } else {
+                alert("Incorrect password. Please try again.");
+                document.getElementById("password").value = "";
+            }
+        });
+    </script>
+</body>
+</html>
