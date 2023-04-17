@@ -46,6 +46,7 @@
             const password = document.getElementById("password").value;
 
             if (password === correctPassword) {
+                sessionStorage.setItem("guthy-access", "true");
                 window.location.href = "soundboard.html"; // Redirect to soundboard.html after successful login
             } else {
                 alert("Incorrect password. Please try again.");
