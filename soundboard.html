@@ -81,5 +81,13 @@ onclick = function(e) {
     if (e.target.tagName === 'BUTTON') (new Audio('sounds/' + e.target.id + '.wav')).play();
 }
     </script>
+    <script>
+        (function() {
+            const accessKey = "guthy-access";
+            if (!sessionStorage.getItem(accessKey)) {
+                window.location.href = "index.html";
+            }
+        })();
+    </script>
 </body>
 </html>
