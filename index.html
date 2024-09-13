@@ -13,34 +13,116 @@
 
     <!-- Header -->
     <div class="header">
-        <h1>North Hollywood High School Fire Alarm Tracker</h1>
-        <p>Keeping track of fire alarm events at our school</p>
+        <div class="header-content">
+            <div class="header-text">
+                <h1>North Hollywood High School Fire Alarm Tracker</h1>
+                <p>Keeping track of fire alarm events at our school</p>
+            </div>
+            <div class="header-logo">
+                <img src="logo-placeholder.png" alt="School Logo">
+            </div>
+        </div>
     </div>
 
     <!-- Statistics -->
     <div class="stats">
+        <!-- Days Without a Fire Alarm -->
         <div class="stat">
-            <h2 id="daysWithoutAlarm">--</h2>
+            <div class="number" id="daysWithoutAlarm">--</div>
+            <div class="unit">days</div>
             <p>Days Without a Fire Alarm</p>
         </div>
+        <!-- Last Alarm Date -->
         <div class="stat">
-            <h2 id="lastAlarmDate">--</h2>
+            <div class="number" id="lastAlarmDate">--</div>
             <p>Last Alarm Date</p>
         </div>
+        <!-- Elapsed Time Since Last Alarm -->
         <div class="stat">
-            <h2 id="timeSinceLast">--</h2>
+            <div class="stat-numbers">
+                <div class="number-unit">
+                    <div class="number" id="elapsedDays">--</div>
+                    <div class="unit">days</div>
+                </div>
+                <div class="number-unit">
+                    <div class="number" id="elapsedHours">--</div>
+                    <div class="unit">hours</div>
+                </div>
+                <div class="number-unit">
+                    <div class="number" id="elapsedMinutes">--</div>
+                    <div class="unit">minutes</div>
+                </div>
+                <div class="number-unit">
+                    <div class="number" id="elapsedSeconds">--</div>
+                    <div class="unit">seconds</div>
+                </div>
+            </div>
             <p>Elapsed Time Since Last Alarm</p>
         </div>
+        <!-- Longest Time Between Alarms -->
         <div class="stat">
-            <h2 id="longestInterval">--</h2>
+            <div class="stat-numbers">
+                <div class="number-unit">
+                    <div class="number" id="longestDays">--</div>
+                    <div class="unit">days</div>
+                </div>
+                <div class="number-unit">
+                    <div class="number" id="longestHours">--</div>
+                    <div class="unit">hours</div>
+                </div>
+                <div class="number-unit">
+                    <div class="number" id="longestMinutes">--</div>
+                    <div class="unit">minutes</div>
+                </div>
+                <div class="number-unit">
+                    <div class="number" id="longestSeconds">--</div>
+                    <div class="unit">seconds</div>
+                </div>
+            </div>
             <p>Longest Time Between Alarms</p>
         </div>
+        <!-- Shortest Time Between Alarms -->
         <div class="stat">
-            <h2 id="shortestInterval">--</h2>
+            <div class="stat-numbers">
+                <div class="number-unit">
+                    <div class="number" id="shortestDays">--</div>
+                    <div class="unit">days</div>
+                </div>
+                <div class="number-unit">
+                    <div class="number" id="shortestHours">--</div>
+                    <div class="unit">hours</div>
+                </div>
+                <div class="number-unit">
+                    <div class="number" id="shortestMinutes">--</div>
+                    <div class="unit">minutes</div>
+                </div>
+                <div class="number-unit">
+                    <div class="number" id="shortestSeconds">--</div>
+                    <div class="unit">seconds</div>
+                </div>
+            </div>
             <p>Shortest Time Between Alarms</p>
         </div>
+        <!-- Average Time Between Alarms -->
         <div class="stat">
-            <h2 id="averageInterval">--</h2>
+            <div class="stat-numbers">
+                <div class="number-unit">
+                    <div class="number" id="averageDays">--</div>
+                    <div class="unit">days</div>
+                </div>
+                <div class="number-unit">
+                    <div class="number" id="averageHours">--</div>
+                    <div class="unit">hours</div>
+                </div>
+                <div class="number-unit">
+                    <div class="number" id="averageMinutes">--</div>
+                    <div class="unit">minutes</div>
+                </div>
+                <div class="number-unit">
+                    <div class="number" id="averageSeconds">--</div>
+                    <div class="unit">seconds</div>
+                </div>
+            </div>
             <p>Average Time Between Alarms</p>
         </div>
     </div>
@@ -57,7 +139,10 @@
         <div class="calendar" id="calendar">
             <!-- Calendar will be generated by JavaScript -->
         </div>
-        <button id="currentMonthButton">Current Month</button>
+        <div class="calendar-buttons">
+            <button id="currentMonthButton">Current Month</button>
+            <button id="lastAlarmButton">Last Alarm</button>
+        </div>
     </div>
 
     <!-- Footer -->
@@ -71,6 +156,7 @@
         let alarmMap = {};
         let displayMonth;
         let displayYear;
+        let lastAlarm;
 
         // Fetch the data from data.json
         fetch('data.json')
@@ -84,7 +170,7 @@
             updateStatistics(alarmTimes);
 
             // Set the default display month and year to the last alarm month
-            const lastAlarm = alarmTimes[alarmTimes.length - 1];
+            lastAlarm = alarmTimes[alarmTimes.length - 1];
             displayMonth = lastAlarm.getMonth();
             displayYear = lastAlarm.getFullYear();
 
@@ -120,19 +206,23 @@
             if (intervals.length > 0) {
                 // Longest Interval
                 const longestInterval = Math.max(...intervals);
-                document.getElementById('longestInterval').innerText = formatDuration(longestInterval);
+                setDurationElements(longestInterval, 'longest');
 
                 // Shortest Interval
                 const shortestInterval = Math.min(...intervals);
-                document.getElementById('shortestInterval').innerText = formatDuration(shortestInterval);
+                setDurationElements(shortestInterval, 'shortest');
 
                 // Average Interval
                 const averageInterval = intervals.reduce((a, b) => a + b, 0) / intervals.length;
-                document.getElementById('averageInterval').innerText = formatDuration(averageInterval);
+                setDurationElements(averageInterval, 'average');
             } else {
-                document.getElementById('longestInterval').innerText = '--';
-                document.getElementById('shortestInterval').innerText = '--';
-                document.getElementById('averageInterval').innerText = '--';
+                // Set '--' for durations
+                ['longest', 'shortest', 'average'].forEach(prefix => {
+                    document.getElementById(prefix + 'Days').innerText = '--';
+                    document.getElementById(prefix + 'Hours').innerText = '--';
+                    document.getElementById(prefix + 'Minutes').innerText = '--';
+                    document.getElementById(prefix + 'Seconds').innerText = '--';
+                });
             }
         }
 
@@ -140,20 +230,32 @@
             function updateCounter() {
                 const now = new Date();
                 const duration = now - lastAlarm;
-                document.getElementById('timeSinceLast').innerText = formatDuration(duration);
+
+                const seconds = Math.floor((duration / 1000) % 60);
+                const minutes = Math.floor((duration / (1000 * 60)) % 60);
+                const hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+                const days = Math.floor(duration / (1000 * 60 * 60 * 24));
+
+                document.getElementById('elapsedDays').innerText = days;
+                document.getElementById('elapsedHours').innerText = hours;
+                document.getElementById('elapsedMinutes').innerText = minutes;
+                document.getElementById('elapsedSeconds').innerText = seconds;
             }
 
             updateCounter();
             setInterval(updateCounter, 1000);
         }
 
-        function formatDuration(duration) {
+        function setDurationElements(duration, prefix) {
             const seconds = Math.floor((duration / 1000) % 60);
             const minutes = Math.floor((duration / (1000 * 60)) % 60);
             const hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
             const days = Math.floor(duration / (1000 * 60 * 60 * 24));
 
-            return `${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`;
+            document.getElementById(prefix + 'Days').innerText = days;
+            document.getElementById(prefix + 'Hours').innerText = hours;
+            document.getElementById(prefix + 'Minutes').innerText = minutes;
+            document.getElementById(prefix + 'Seconds').innerText = seconds;
         }
 
         function generateAlarmMap() {
@@ -260,6 +362,12 @@
             const now = new Date();
             displayMonth = now.getMonth();
             displayYear = now.getFullYear();
+            generateCalendar(displayMonth, displayYear);
+        });
+
+        document.getElementById('lastAlarmButton').addEventListener('click', () => {
+            displayMonth = lastAlarm.getMonth();
+            displayYear = lastAlarm.getFullYear();
             generateCalendar(displayMonth, displayYear);
         });
     </script>
