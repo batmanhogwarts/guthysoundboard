@@ -1,60 +1,110 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Modern Calendar</title>
-    <!-- Link to external CSS file -->
-    <link rel="stylesheet" href="styles.css">
-    <!-- Include Font Awesome for icons -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      integrity="sha384-u9i02jnV5GltONbl0AQB5npajJPM8DE7VV98IbRfAQKfdJ1Zcg39uL5cSYgywO4x"
-      crossorigin="anonymous"
-    />
-</head>
-<body>
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f5f5f5;
+    color: #333333;
+}
 
-    <!-- Buttons -->
-    <div class="button-container">
-        <button class="modern-button" id="current-month">
-            <i class="fas fa-calendar-day"></i> Current Month
-        </button>
-        <button class="modern-button" id="last-alarm">
-            <i class="fas fa-bell"></i> Last Alarm
-        </button>
-    </div>
+/* Button Container */
+.button-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-    <!-- Calendar Header -->
-    <div class="calendar-header">
-        <button class="nav-arrow" id="prev-month">
-            <i class="fas fa-chevron-left"></i>
-        </button>
-        <span id="calendar-month-year">September 2024</span>
-        <button class="nav-arrow" id="next-month">
-            <i class="fas fa-chevron-right"></i>
-        </button>
-    </div>
+/* Modern Buttons */
+.modern-button {
+    background-color: #ffffff;
+    color: #007BFF;
+    border: 2px solid #007BFF;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0 10px;
+}
 
-    <!-- Calendar Body -->
-    <table id="calendar">
-        <thead>
-            <tr>
-                <th>Sun</th>
-                <th>Mon</th>
-                <th>Tue</th>
-                <th>Wed</th>
-                <th>Thu</th>
-                <th>Fri</th>
-                <th>Sat</th>
-            </tr>
-        </thead>
-        <tbody id="calendar-body">
-            <!-- Calendar dates will be injected here by JavaScript -->
-        </tbody>
-    </table>
+.modern-button i {
+    margin-right: 8px;
+}
 
-    <!-- Link to external JavaScript file -->
-    <script src="script.js"></script>
-</body>
-</html>
+.modern-button:hover {
+    background-color: #007BFF;
+    color: #ffffff;
+}
+
+/* Calendar Header */
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+#calendar-month-year {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0 20px;
+}
+
+.nav-arrow {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #007BFF;
+    transition: color 0.3s ease;
+}
+
+.nav-arrow:hover {
+    color: #0056b3;
+}
+
+/* Calendar Table */
+#calendar {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+}
+
+#calendar th, #calendar td {
+    width: 14.28%;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #dddddd;
+}
+
+#calendar th {
+    background-color: #007BFF;
+    color: #ffffff;
+}
+
+#calendar td {
+    height: 80px;
+    vertical-align: top;
+}
+
+#calendar td.today {
+    background-color: #cce5ff;
+}
+
+#calendar td.other-month {
+    color: #cccccc;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    #calendar-month-year {
+        font-size: 20px;
+    }
+
+    .modern-button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    .nav-arrow {
+        font-size: 20px;
+    }
+}
